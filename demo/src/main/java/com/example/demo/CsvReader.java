@@ -21,7 +21,7 @@ public class CsvReader {
     private static final String QUEUE_NAME="DS";
     public void read(){
         try {
-            File file = new File("src/main/resources/sensor.csv");
+            File file = new File("sensor.csv");
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String line = " ";
@@ -50,7 +50,7 @@ public class CsvReader {
                     channel.basicPublish("", QUEUE_NAME, null, deviceMessage.toString().getBytes(StandardCharsets.UTF_8));
                     System.out.println(" [x] Sent '" + deviceMessage + "'");
                 }
-                sleep(30000);
+                sleep(3000);
             }
             br.close();
         }
