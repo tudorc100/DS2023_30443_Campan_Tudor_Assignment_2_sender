@@ -10,7 +10,9 @@ import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Date;
 import java.util.concurrent.TimeoutException;
 
@@ -18,7 +20,7 @@ import static java.lang.Thread.sleep;
 
 public class CsvReader {
 
-    private static final String QUEUE_NAME="DS";
+    private static final String QUEUE_NAME="Tudor";
     public void read(){
         try {
             File file = new File("sensor.csv");
@@ -28,10 +30,10 @@ public class CsvReader {
             String[] tempArr;
             int count =0;
             while ((line = br.readLine()) != null) {
-                Integer deviceId = count;
+                Integer deviceId;
+                if(count%2==0) deviceId=4; else deviceId=3;
                 tempArr = line.split(",");
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-                String date = sdf.format(new Date());
+                String date= new Timestamp(System.currentTimeMillis()).toString();
                 System.out.println(deviceId+" "+tempArr[0] +" "+date);
                 JSONObject deviceMessage = new JSONObject();
                 deviceMessage.put("deviceId",String.valueOf(deviceId));
@@ -39,10 +41,10 @@ public class CsvReader {
                 deviceMessage.put("date",date);
                 count++;
                 ConnectionFactory connectionFactory = new ConnectionFactory();
-                connectionFactory.setUsername("xqcohroc");
-                connectionFactory.setPassword("1_BjxfWtsPIoqTeDmpwJYUual3fezis2");
+                connectionFactory.setUsername("mnyspvbm");
+                connectionFactory.setPassword("QPnkU9RP8ZvX8nieYDRnHHNq_2Ebh2-m");
                 connectionFactory.setPort(5672);
-                connectionFactory.setUri("amqps://xqcohroc:1_BjxfWtsPIoqTeDmpwJYUual3fezis2@sparrow.rmq.cloudamqp.com/xqcohroc");
+                connectionFactory.setUri("amqps://mnyspvbm:QPnkU9RP8ZvX8nieYDRnHHNq_2Ebh2-m@sparrow.rmq.cloudamqp.com/mnyspvbm");
 
                 try (Connection connection = connectionFactory.newConnection();
                      Channel channel = connection.createChannel()) {
