@@ -31,7 +31,7 @@ public class CsvReader {
             int count =0;
             while ((line = br.readLine()) != null) {
                 Integer deviceId;
-                if(count%2==0) deviceId=4; else deviceId=3;
+                if(count%2==0) deviceId=6; else deviceId=5;
                 tempArr = line.split(",");
                 String date= new Timestamp(System.currentTimeMillis()).toString();
                 System.out.println(deviceId+" "+tempArr[0] +" "+date);
@@ -52,7 +52,7 @@ public class CsvReader {
                     channel.basicPublish("", QUEUE_NAME, null, deviceMessage.toString().getBytes(StandardCharsets.UTF_8));
                     System.out.println(" [x] Sent '" + deviceMessage + "'");
                 }
-                sleep(3000);
+                sleep(300);
             }
             br.close();
         }
